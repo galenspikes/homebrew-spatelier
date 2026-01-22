@@ -3,7 +3,8 @@ class Spatelier < Formula
 
   desc "Personal tool library for video and music file handling"
   homepage "https://github.com/galenspikes/spatelier"
-  # No source URL - install directly from PyPI to use wheels (faster)
+  url "https://github.com/galenspikes/spatelier/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "bfe48124cbb08616cefab217b3e2e7d84852f22d32a758643109035b7bdda6a1"
   license "MIT"
   head "https://github.com/galenspikes/spatelier.git", branch: "main"
 
@@ -11,11 +12,7 @@ class Spatelier < Formula
   depends_on "ffmpeg"
 
   # Force installation from PyPI using wheels only (no source builds)
-  # This bypasses Homebrew's auto-detection of dependencies and uses PyPI wheels
-
-  def version
-    "0.2.0"
-  end
+  # The URL above is only for Homebrew's versioning - we ignore it and install from PyPI
 
   def install
     python3 = "python3.12"
