@@ -3,8 +3,8 @@ class Spatelier < Formula
 
   desc "Personal tool library for video and music file handling"
   homepage "https://github.com/galenspikes/spatelier"
-  url "https://github.com/galenspikes/spatelier/archive/refs/tags/v0.3.6.tar.gz"
-  sha256 "4ba2e92432649ea78c6071f5a646d17a4d3f9e44c8e5871653b6b8d04c18a967"
+  url "https://github.com/galenspikes/spatelier/archive/refs/tags/v0.3.7.tar.gz"
+  sha256 "9ee38e5ed73c87bb5b7e31f13126868ece4ff768440719534e739961f4b60e51"
   license "MIT"
   head "https://github.com/galenspikes/spatelier.git", branch: "main"
 
@@ -18,8 +18,8 @@ class Spatelier < Formula
     python3 = "python3.12"
     venv = virtualenv_create(libexec, python3)
 
-    # Install pip in the venv (virtualenv_create uses --without-pip by default)
-    system python3, "-m", "pip", "install", "--python", libexec/"bin/python", "pip", "setuptools", "wheel"
+    # Install pip, setuptools, and wheel using ensurepip (bundled with Python)
+    system libexec/"bin/python", "-m", "ensurepip", "--upgrade"
 
     # Install the package with all dependencies from pyproject.toml
     # Installing from source directory should automatically install dependencies
