@@ -8,7 +8,8 @@ class Spatelier < Formula
   license "MIT"
   head "https://github.com/galenspikes/spatelier.git", branch: "main"
 
-  # Skip relinking libexec; av/faster-whisper dylibs have paths that don't fit in Mach-O header
+  # skip_clean does not prevent "fix install linkage"; av's pre-built dylibs have header space
+  # too small for Homebrew's path rewrite. Install still works; ignore the linkage warning.
   skip_clean "libexec"
 
   depends_on "python@3.12"
@@ -22,7 +23,9 @@ class Spatelier < Formula
     # Install pip using get-pip.py (ensurepip finds system pip with --system-site-packages)
     system "curl", "-sSL", "https://bootstrap.pypa.io/get-pip.py", "-o", "/tmp/get-pip.py"
     system libexec/"bin/python", "/tmp/get-pip.py", "--isolated", "--disable-pip-version-check"
-    system libexec/"bin/pip", "install", "-v", buildpath
+    system libexec/"bin/pip", "install", "-v", "#{buildpath}[web]"
+    # Install Chromium for Playwright so YouTube cookie refresh works
+    system libexec/"bin/playwright", "install", "chromium"
     bin.install_symlink libexec/"bin/spatelier"
   end
 
